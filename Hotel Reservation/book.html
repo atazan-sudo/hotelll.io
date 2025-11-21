@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aurora Royale Hotel - Room Booking</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #e7d8c3, #f7efe3, #e6ccb2);
+      font-family: 'Poppins', sans-serif;
+      color: #4a2c18;
+    }
+    .room-card:hover {
+      transform: translateY(-5px);
+      transition: all 0.3s ease;
+    }
+    /* Custom Toast Notification Styles */
+    #toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+    .toast {
+      background-color: #8b6b4c;
+      color: white;
+      padding: 15px 20px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="toast-container"></div>
+
+  <!-- Header -->
+  <header class="bg-[#8b6b4c] text-white text-center py-6 shadow-lg">
+    <h1 class="text-3xl font-bold tracking-wide">Aurora Royale Hotel</h1>
+    <p class="text-sm opacity-90">Luxury meets comfort — book your stay today.</p>
+    <button onclick="signOut()" class="absolute top-4 right-4 bg-white text-[#8b6b4c] px-3 py-1 rounded-full text-sm font-semibold hover:bg-gray-100 transition">Sign Out</button>
+  </header>
+
+  <!-- Booking Section -->
+  <section class="py-12 px-6 max-w-7xl mx-auto">
+    <h2 class="text-2xl font-semibold mb-8 text-center">Choose Your Room</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <!-- Room 1 -->
+      <div class="bg-white/90 rounded-2xl shadow-lg overflow-hidden room-card">
+        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c" class="w-full h-56 object-cover" alt="Deluxe Room">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold">Deluxe Room</h3>
+          <p class="text-[#8b6b4c] mt-2 mb-2">₱4,500 / night</p>
+          <div class="flex flex-col gap-2 mb-4">
+            <label class="text-sm font-medium">Check-in Date:</label>
+            <input type="date" id="checkin1" class="border rounded-lg p-2 focus:ring-2 focus:ring-[#d6ad60]">
+            <label class="text-sm font-medium mt-2">Check-out Date:</label>
+            <input type="date" id="checkout1" class="border rounded-lg p-2 focus:ring-2 focus:ring-[#d6ad60]">
+          </div>
+          <button onclick="bookRoom('Deluxe Room', 4500, 'checkin1','checkout1', 1)" class="w-full bg-[#8b6b4c] text-white py-2 rounded-lg hover:bg-[#4a2c18] transition">Book Now</button>
+        </div>
+      </div>
+
+      <!-- Room 2 -->
+      <div class="bg-white/90 rounded-2xl shadow-lg overflow-hidden room-card">
+        <img src="https://sn.solaireresort.com/sites/default/files/styles/square/public/banner/rooms/mobile/2024-05/Premier%20Suite%20-%20Bedroom%20angle%201%20%281%29.jpg?itok=x7pKKxl_" class="w-full h-56 object-cover" alt="Premier Suite">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold">Premier Suite</h3>
+          <p class="text-[#8b6b4c] mt-2 mb-2">₱6,800 / night</p>
+          <div class="flex flex-col gap-2 mb-4">
+            <label class="text-sm font-medium">Check-in Date:</label>
+            <input type="date" id="checkin2" class="border rounded-lg p-2 focus:ring-2 focus:ring-[#d6ad60]">
+            <label class="text-sm font-medium mt-2">Check-out Date:</label>
+            <input type="date" id="checkout2" class="border rounded-lg p-2 focus:ring-2 focus:ring-[#d6ad60]">
+          </div>
+          <button onclick="bookRoom('Premier Suite', 6800,'checkin2','checkout2', 2)" class="w-full bg-[#8b6b4c] text-white py-2 rounded-lg hover:bg-[#4a2c18] transition">Book Now</button>
+        </div>
+      </div>
+
+      <!-- Room 3 -->
+      <div class="bg-white/90 rounded-2xl shadow-lg overflow-hidden room-card">
+        <img src="https://www.zurihoteliloilo.com/wp-content/uploads/2022/08/family-room-4-700x430.jpg" class="w-full h-56 object-cover" alt="Family Suite">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold">Family Suite</h3>
+          <p class="text-[#8b6b4c] mt-2 mb-2">₱8,200 / night</p>
+          <div class="flex flex-col gap-2 mb-4">
+            <label class="text-sm font-medium">Check-in Date:</label>
+            <input type="date" id="checkin3" class="border rounded-lg p-2 focus:ring-2 focus:ring-[#d6ad60]">
+            <label class="text-sm font-medium mt-2">Check-out Date:</label>
+            <input type="date" id="checkout3" class="border rounded-lg p-2 focus:ring-2 focus:ring-[#d6ad60]">
+          </div>
+          <button onclick="bookRoom('Family Suite', 8200,'checkin3','checkout3', 3)" class="w-full bg-[#8b6b4c] text-white py-2 rounded-lg hover:bg-[#4a2c18] transition">Book Now</button>
+        </div>
+      </div>
+
+      <!-- Room 4 -->
+      <div class="bg-white/90 rounded-2xl shadow-lg overflow-hidden room-card">
+        <img src="https://images.unsplash.com/photo-1505691723518-36a5ac3be353" class="w-full h-56 object-cover" alt="Executive Room">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold">Executive Room</h3>
+          <p class="text-[#8b6b4c] mt-2 mb-2">₱5,200 / night</p>
+          <div class="flex flex-col gap-2 mb-4">
+            <label class="text-sm font-medium">Check-in Date:</label>
+            <input type="date" id="checkin4" class="border rounded-lg p-2 focus:ring-2 focus:ring-[#d6ad60]">
+            <label class="text-sm font-medium mt-2">Check-out Date:</label>
+            <input type="date" id="checkout4" class="border rounded-lg p-2 focus:ring-2 focus:ring-[#d6ad60]">
+          </div>
+          <button onclick="bookRoom('Executive Room', 5200,'checkin4','checkout4', 4)" class="w-full bg-[#8b6b4c] text-white py-2 rounded-lg hover:bg-[#4a2c18] transition">Book Now</button>
+        </div>
+      </div>
+
+      <!-- Room 5 -->
+      <div class="bg-white/90 rounded-2xl shadow-lg overflow-hidden room-card">
+        <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32" class="w-full h-56 object-cover" alt="Couple's Suite">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold">Couple’s Suite</h3>
+          <p class="text-[#8b6b4c] mt-2 mb-2">₱5,800 / night</p>
+          <div class="flex flex-col gap-2 mb-4">
+            <label class="text-sm font-medium">Check-in Date:</label>
+            <input type="date" id="checkin5" class="border rounded-lg p-2 focus:ring-2 focus:ring-[#d6ad60]">
+            <label class="text-sm font-medium mt-2">Check-out Date:</label>
+            <input type="date" id="checkout5" class="border rounded-lg p-2 focus:ring-2 focus:ring-[#d6ad60]">
+          </div>
+          <button onclick="bookRoom('Couple’s Suite', 5800,'checkin5','checkout5', 5)" class="w-full bg-[#8b6b4c] text-white py-2 rounded-lg hover:bg-[#4a2c18] transition">Book Now</button>
+        </div>
+      </div>
+
+      <!-- Room 6 -->
+      <div class="bg-white/90 rounded-2xl shadow-lg overflow-hidden room-card">
+        <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b" class="w-full h-56 object-cover" alt="Presidential Suite">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold">Presidential Suite</h3>
+          <p class="text-[#8b6b4c] mt-2 mb-2">₱12,000 / night</p>
+          <div class="flex flex-col gap-2 mb-4">
+            <label class="text-sm font-medium">Check-in Date:</label>
+            <input type="date" id="checkin6" class="border rounded-lg p-2 focus:ring-2 focus:ring-[#d6ad60]">
+            <label class="text-sm font-medium mt-2">Check-out Date:</label>
+            <input type="date" id="checkout6" class="border rounded-lg p-2 focus:ring-2 focus:ring-[#d6ad60]">
+          </div>
+          <button onclick="bookRoom('Presidential Suite', 12000,'checkin6','checkout6', 6)" class="w-full bg-[#8b6b4c] text-white py-2 rounded-lg hover:bg-[#4a2c18] transition">Book Now</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="text-center py-6 text-[#8b6b4c] text-sm">
+    © 2025 Aurora Royale Hotel • Iloilo City, Philippines
+  </footer>
+
+  <script>
+    // --- Custom Toast Notification Logic (Copied from login.html) ---
+    function showToast(message) {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.textContent = message;
+        container.appendChild(toast);
+
+        setTimeout(() => toast.classList.add('show'), 10);
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 500);
+        }, 3000);
+    }
+
+    // --- Authentication Guard ---
+    if (localStorage.getItem('isLoggedIn') !== 'true') {
+        window.location.href = 'login.html';
+    }
+
+    // --- Sign Out Function ---
+    function signOut() {
+        localStorage.removeItem('isLoggedIn');
+        showToast('You have signed out.');
+        setTimeout(() => {
+            window.location.href = 'login.html';
+        }, 800);
+    }
+
+    // --- Booking Logic (Updated to use showToast) ---
+    function bookRoom(roomName, pricePerNight, checkinId, checkoutId, roomNumber) {
+      const checkin = document.getElementById(checkinId).value;
+      const checkout = document.getElementById(checkoutId).value;
+
+      if (!checkin || !checkout) {
+        showToast('Error: Please select both check-in and check-out dates.');
+        return;
+      }
+
+      // Calculate number of nights
+      const checkinDate = new Date(checkin);
+      const checkoutDate = new Date(checkout);
+      const timeDiff = checkoutDate - checkinDate;
+      const nights = timeDiff / (1000 * 3600 * 24);
+
+      if (nights <= 0) {
+        showToast('Error: Check-out date must be after check-in date.');
+        return;
+      }
+      
+      const totalPrice = pricePerNight * nights;
+
+      // JSON Data Structure for LocalStorage (Requirement 2)
+      const bookingData = {
+          room: roomName,
+          price: totalPrice,
+          pricePerNight: pricePerNight, // Storing price per night too for display
+          nights: nights,
+          checkin: checkin,
+          checkout: checkout,
+          roomNumber: roomNumber // Unique ID for image lookup
+      };
+      
+      // Save data to localStorage (Requirement 2: Data writing using JSON and LocalStorage)
+      localStorage.setItem('bookingData', JSON.stringify(bookingData));
+      
+      showToast('Room Selected! Proceeding to payment...');
+      // Redirect after a short delay to allow toast visibility
+      setTimeout(() => {
+        window.location.href = 'payment.html';
+      }, 800);
+    }
+  </script>
+</body>
+</html>
